@@ -401,7 +401,21 @@ Comandos para copiar en memoria
  git config --global --unset alias.<tuAlias>
 -------------------------------------------------
 Uso de alias en linux
-  alis arbolito="git log --all --graph --decorate --oneline"
+  alias arbolito="git log --all --graph --decorate --oneline"
 -------------------------------------------------
 Tag y Versiones 
+  Crear tag
+    git tag -a v0.1 -m "Resultado de las primeras clases del curso" hash
+  Ver tag
+    git tag
+  Ver detalle
+    git show-ref --tags
+  Mandar a internet
+    git pull origin main
+	git push origin --tags
+  Eliminar tag en el repositorio
+    git tag -d v0.2
+  Eliminar la referencia en el repositorio remoto
+    git push origin :refs/tags/v0.2
+
   
