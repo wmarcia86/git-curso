@@ -1,0 +1,384 @@
+Comandos basicos  
+git init
+git add biografia.txt
+git commit -m "version 1"
+
+git add .
+git commit -m "Cambios a v1"
+git status -> estado de la bd, si has hecho un cambio no lo has añadido
+git show -> todos los cambios historicos que has hecho, cuando se hizo y quien lo hizo
+git log biografia.txt -> para ver la historia entera de un archivo.
+
+git push -> enviar a repositorio remoto
+git pull -> traer cambios de repositorio remoto
+
+git version -> Version de GIT
+git help -> Ayuda de GIT
+
+git add nombre_archivo
+git rm nombre_archivo --> para eliminar el archivo del repositorio
+git rm --cached nombre_archivo --> para eliminar del repositorio y del stagin pero no del disco duro
+git rm --force nombre_archivo -> para eliminar del repositorio y del disco duro
+
+git status --> ver el estado verificando las zonas staged
+
+Ejemplo aplicando los comandos.
+git init -> para inicar un repositorio, crea la carpeta oculta .git, solo se ejecuta una vez por proyecto
+git status -s -> verificar lo que esta pasando
+git add . -> agregar todos los archivos para que este pendiente de los cambios
+git commit -m "Inicio de repositorio"
+git log --oneline -> Muetra la lista de commit del mas reciente al mas antiguo
+
+Para salir del editor vim -> :q!
+
+git status -s -b -> Informacion de la rama maestra
+git statis -sb -> lo mismo que el comando anterior
+
+git config --global user.name "mi nombre"
+git config --global user.email "correo@dominio"
+
+git config user.name
+git config user.email
+---------------------------------------------------
+Desde github al crear repositorio indica
+
+create a new repository on the command line
+echo "# test-repository" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/wmarcia86/test-repository.git
+git push -u origin main
+
+…or push an existing repository from the command line
+
+git remote add origin https://github.com/wmarcia86/test-repository.git
+git branch -M main
+git push -u origin main
+------------------------------------------
+Siguiendo con el ejemplo
+
+git remote add origin https://github.com/wmarcia86/test-repository.git
+git branch -M master
+git push -u origin master
+
+git remote -> lista todos los remote agregados
+git remote -v -> lista todos los remote agregados con mas información acerca del repositorio
+
+git remote show origin -> lista la url del repositorio remoto y la informacion del rastreo de ramas
+
+git remote rm nombre -> elimina el remoto agregado al repositorio
+git remote rename nombre_actual nombre_nuevo
+---------------------------------------------
+Github pages
+-- Subir un html
+-- Luego ir a settings
+-- Luego ir a pages
+-- Seleccionar el branch
+-- Seleccionar la ubicación
+-- Dar clic en Save 
+   va a brindar una url
+   Github se toma su tiempo
+---------------------------------------------
+Clonar repositorio
+-- Crear carpeta
+-- Copiar de github del boton Code
+   Https -> https://github.com/wmarcia86/test-repository.git
+---------------------------------------------
+Para subir en hosting paginas estaticas
+  https://www.netlify.com/
+---------------------------------------------
+Git Intermedio
+
+Ignorando Archivos
+- Crear en el archivo .gitignore
+- Dentro del archivo
+   .env --> ignorar Archivo
+   *.js --> ignorar archivos con extension .js
+   node_modules --> ignorar carpeta
+----------------------------------------------
+Cambiar tema de visual studio code
+https://vscodethemes.com/
+-----------------------------------------------
+
+Retroceder en el tiempo
+
+git checkout
+git revert
+git reset
+
+git log --oneline
+
+git checkout -> sirve para revisar lo que se hizo en un commit no se tiene que hacer cambios. Y si se hacen es necesario luego hacer una rama
+git checkout 7f0aeeb -> esto mueve el head
+
+Luego hay que volver al id que tiene el ultimo commit
+git checkout e8ef870-> esto mueve el head
+git checkout master -> devuelve al ultimo
+
+----------------------------------------------
+Cambiar rama
+git branch -m master main
+
+Para configurar de manera global
+git config --global init.defaultBranch main
+
+git config --global init.defaultBranch --> mostrar el valor guardado
+git config --list --> mostrar todas las configuraciones
+
+git config --list --show-origin --> mostrar ubicacion de los archivos de configuracion de git
+
+Forma de modificar:
+git config --global --replace-all init.defaultBranch master
+
+Otro forma:
+git config --global --unset-all init.defaultBranch --> Elimina el nombre de la propiedad
+git config --global --add user.name “Aquí va tu nombre”
+
+-----------------------------------------------
+git reset -> restroceder eliminando los commit
+git reset --mixed id --> --mixed se realiza por defecto pero no es agresivo no elimina los archivos o cambios
+						 aplicando de nuevo el mismo comando poniendo el commit posterior se vuelve
+git reset --hard id --> es agresivo elimina los archivos y los cambios
+
+git reflog --> aparece el historial de todo lo que se ha hecho
+Aplicando el comando anterior podemos obtener el ultimo id para poder regresar
+git reset --hard id_ultimo
+
+No es recomendable usar git reset si ya se han subido los cambios al repositorio remoto
+Si uno se retrocede con git reset --hard --> y luego aplica un cambio, hace commit y luego push se va a generar un error
+porque el id que se elimino por el reset no se encuentra entonces no hace match con lo que esta en el repositorio
+por lo cual se puede aplicar un pull para arreglar
+
+git pull origin master 
+ Esta solucion no es lo mas idoneo
+ 
+ git reset HEAD: Este es el comando para sacar archivos del área de staging. 
+ No para borrarlos ni nada de eso, solo para que los últimos cambios de estos archivos 
+ no se envíen al último commit, a menos que cambiemos de opinión y los incluyamos de nuevo en staging con git add, por supuesto.
+-----------------------------------------
+git revert --> eliminar un commit
+  Se tiene que seleccionar el commit a eliminar
+
+git revert id --> Esto crea un nuevo commit relacionado al cambio
+-----------------------------------------
+git branch --> crear rama para realizar cambios fuera del main o master
+
+git branch nombre_rama
+Para usar la rama se tiene que hacer uso de checkout
+
+git branch --> Lista las ramas y aparece con un asterisco la que se esta usando
+    01-rama
+  * master
+  
+ git brach -a --> Lista las ramas tanto locales como remotas
+
+git checkout nombre_rama
+
+git log --oneline --graph -> Se usa para visualizar lo que ha pasado en el repositorio
+
+git log --stat
+
+Cuando se agregan nuevos cambios, se tiene que tomar en cuenta que el branch nuevo no esta en el repositorio
+por lo cual al hacer push genera un error, por lo cual, se tiene que usar.
+  git push --set-upstream origin nombre_rama
+--------------------------------------------------------
+git merge --> Para juntar dos ramas
+git merge nombre_rama --> Se tiene que posicionar en la rama que se tiene que actualizar
+
+--------------------------------------------------------
+git branch -d nombre_rama --> Eliminar rama
+git push origin --delete 02-rama --> Forma remota
+--------------------------------------------------------
+git tag --> para hacer versiones del proyecto en el repositorio
+git tag nombre_tag -m "0.0.1"
+
+git tag --> listar los tags
+git tag -d nombre_tag --> Eliminar un tag
+git show nombre_tag --> Mostrar informacion del tag
+
+git push --tag --> Subir los tag al repositorio
+---------------------------------------------------------
+Ver el pull
+git pull -> Para obtener todo los cambios en el repositorio remoto
+            sirve ademas para comparar.
+---------------------------------------------------------
+git clone url_del_servidor_remoto: Nos permite descargar los archivos de la última versión de la rama principal y todo el historial de cambios en la carpeta .git.
+git push: Luego de hacer git add y git commit debemos ejecutar este comando para mandar los cambios al servidor remoto.
+git fetch: Lo usamos para traer actualizaciones del servidor remoto y guardarlas en nuestro repositorio local (en caso de que hayan, por supuesto).
+git merge: También usamos el comando git merge con servidores remotos. Lo necesitamos para combinar los últimos cambios del servidor remoto y nuestro directorio de trabajo.
+git pull: Básicamente, git fetch y git merge al mismo tiempo.
+---------------------------------------------------------
+Adicionalmente, tenemos otros comandos que nos sirven para trabajar en proyectos muy grandes:
+
+git log --oneline:Te muestra el id commit y el título del commit.
+git log --decorate: Te muestra donde se encuentra el head point en el log.
+git log --stat: Explica el número de líneas que se cambiaron brevemente.
+git log -p: Explica el número de líneas que se cambiaron y te muestra que se cambió en el contenido.
+git shortlog: Indica que commits ha realizado un usuario, mostrando el usuario y el título de sus commits.
+git log --graph --oneline --decorate y
+git log --pretty=format:"%cn hizo un commit %h el dia %cd": Muestra mensajes personalizados de los commits.
+git log -3: Limitamos el número de commits.
+git log --after=“2018-1-2”
+git log --after=“today” y
+git log --after=“2018-1-2” --before=“today”: Commits para localizar por fechas.
+git log --author=“Name Author”: Commits hechos por autor que cumplan exactamente con el nombre.
+git log --grep=“INVIE”: Busca los commits que cumplan tal cual está escrito entre las comillas.
+git log --grep=“INVIE” –i: Busca los commits que cumplan sin importar mayúsculas o minúsculas.
+git log – index.html: Busca los commits en un archivo en específico.
+git log -S “Por contenido”: Buscar los commits con el contenido dentro del archivo.
+git log > log.txt: guardar los logs en un archivo txt
+---------------------------------------------------------
+Gestion de rama
+git branch rama
+git checkout rama
+git commit -am
+git status
+git show
+git log --stat
+
+git branch -nombre de la rama-: Con este comando se genera una nueva rama.
+
+git checkout -nombre de la rama-: Con este comando puedes saltar de una rama a otra.
+
+git checkout -b rama: Genera una rama y nos mueve a ella automáticamente, Es decir, es la combinación de git brach y git checkout al mismo tiempo.
+
+git reset id-commit: Nos lleva a cualquier commit no importa la rama, ya que identificamos el id del tag., eliminando el historial de los commit posteriores al tag seleccionado.
+
+git checkout rama-o-id-commit: Nos lleva a cualquier commit sin borrar los commit posteriores al tag seleccionado.
+----------------------------------------------------------------------------------------------------
+Para verificar los archivos cambiados
+  git status
+ 
+Se puede realizar el commit
+ git commit -a
+   Se va hacer el commit pero va aparecer un entorno de edicion para agregar el texto
+    - ESC I -> para iniciar modo de edicion para insertar texto
+	- Para guardar -> ESC Shift ZZ
+
+Se puede hacer los siguiente comandos para verificar el log
+  git log
+  git log --stat
+  
+ ---------------------------------
+ Crear rama
+   git status -> verificar la rama
+   git show -> para conocer donde esta el head
+   git branch cabecera ó git checkout -b cabecer
+   git show -> verificar la rama creada
+   git checkout cabecera
+   
+ En mac se puede usar zsh o iterm
+ -------------------------------------------------
+ Realizar merge
+   Tomando en cuenta la rama que se va a aplicar los cambios conocer.
+     git branch
+   Ponerse a la rama que se aplicar los cambios de la rama.
+     git checkout master
+	 git merge cabecera 
+   Se abra el edito para poner un mensaje
+     ESC I -> Poner mensaje
+	 ESC Shiff zz
+   git log
+   Si se quiere eliminar la rama aplicar
+     git branch -d cabecera
+-------------------------------------------------
+Comandos básicos de GitHub
+git init: crear un repositorio.
+git add: agregar un archivo a staging.
+git commit -m “mensaje”: guardar el archivo en git con un mensaje.
+git branch: crear una nueva rama.
+git checkout: moverse entre ramas.
+git push: mandar cambios a un servidor remoto.
+git fetch: traer actualizaciones del servidor remoto y guardarlas en nuestro repositorio local.
+git merge: tiene dos usos. Uno es la fusión de ramas, funcionando como un commit en la rama actual, trayendo la rama indicada. Su otro uso es guardar los cambios de un servidor remoto en nuestro directorio.
+git pull: fetch y merge al mismo tiempo.
+git checkout “codigo de version” “nombre del archivo”: volver a la última versión de la que se ha hecho commit.
+git reset: vuelve al pasado sin posibilidad de volver al futuro, se debe usar con especificaciones.
+git reset --soft: vuelve a la versión en el repositorio, pero guarda los cambios en staging. Así, podemos aplicar actualizaciones a un nuevo commit.
+git reset --hard: todo vuelve a su versión anterior
+git reset HEAD: saca los cambios de staging, pero no los borra. Es lo opuesto a git add.
+git rm: elimina los archivos, pero no su historial. Si queremos recuperar algo, solo hay que regresar. se utiliza así:git rm --cached elimina los archivos en staging pero los mantiene en el disco duro.git rm --force elimina los archivos de git y del disco duro.
+git status: estado de archivos en el repositorio.
+git log: historia entera del archivo.
+git log --stat: cambios específicos en el archivo a partir de un commit.
+git show: cambios históricos y específicos hechos en un archivo.
+git diff “codigo de version 1” “codigo de version 2”: comparar cambios entre versiones.
+git diff: comparar directorio con staging.
+git merge --abort: abortar un merge
+-------------------------------------------------
+git config -l
+
+git condig --global user.email "sagitario.wilbert@gmail.com" 
+
+Crear una llave
+   ssh-keygen -t rsa -b 4096 -C "sagitario.wilbert@gmail.com"
+   Ubicacion de las llaves publicas y privadas
+   Enter passpharase -> password -> Sagitario
+   Verificacion fingerprint y el ramdon image
+   
+Windows y linux
+   Verificacion de programa que verifica las llaves
+	eval $(ssh-agent -s)
+   
+   Agregar las llaves al sistema
+    ssh-add ~/.ssh/id_rsa
+	
+Mac
+   Verificacion de programa que verifica las llaves
+     cat known_hosts
+     eval "$(ssh-agent -s)" 
+	    > 10.12 SIERRA es necesario cambiar el archivo config 
+     vim config
+	    Host *
+			AddKeysToAgent yes
+			UseKeychain yes
+			IdentityFile ~/.ssh/id_rsa
+
+   Agregar las llaves al sistema
+    ssh-add -K ~/.ssh/id_rsa
+-------------------------------------------------
+Agregar la llave privada a repositorio en GitHub
+	- Ir a Setting en github
+	- Ir a SSH and GPG keys
+	- Dar clic a New SSH key
+	- Poner un title y copiar y pegar la key que se encuentra en ~/.ssh/id_rsa.pub
+	- Dar clic Add SSH Key
+-------------------------------------------------
+Cómo conectar un repositorio de GitHub a nuestro documento local
+   git remote add origin URL
+
+Verificar que la URL se haya guardado correctamente
+   git remote
+   git remote -v
+   
+Traer la versión del repositorio remoto y 
+hacer merge para crear un commit con los archivos de
+ambas partes. Podemos usar git fetch y git merge 
+o solo git pull con el flag
+	git pull origin main --allow-unrelated-histories
+
+Por último, ahora sí podemos hacer git push para guardar 
+los cambios de nuestro repositorio local en GitHub:
+
+	git push origin main
+
+-------------------------------------------------
+Renombrar rama
+   git branch -M main
+  
+Pasos para crear un token de acceso personal.
+
+-------------------------------------------------
+Desde el 2022 GitHub ya no deja hacer el push con la contraseña del propio GitHub, para esto tenemos que crear un token, y este token es la contraseña que vamos a colocar cuando nos pida clave
+
+Seguir la secuencia: Ingresamos a nuestra cuenta de GitHub.
+
+Buscamos Settings
+Click en Developer settings
+Click en Personal access tokens
+Click en Generate new token aquí se puede colocar un nombre, la fecha de expiración.
+Tildar en repo y luego click en el botón verde Generate token
+
+
