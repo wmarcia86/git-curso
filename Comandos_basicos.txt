@@ -348,6 +348,9 @@ Agregar la llave privada a repositorio en GitHub
 -------------------------------------------------
 Cómo conectar un repositorio de GitHub a nuestro documento local
    git remote add origin URL
+   
+Setiar
+   git remote set-url origin url-ssh-del-repositorio-en-github
 
 Verificar que la URL se haya guardado correctamente
    git remote
@@ -380,5 +383,25 @@ Click en Developer settings
 Click en Personal access tokens
 Click en Generate new token aquí se puede colocar un nombre, la fecha de expiración.
 Tildar en repo y luego click en el botón verde Generate token
+-------------------------------------------------
+Comandos para copiar en memoria
+  Mac
+    pbcopy < ~/.ssh/id_rsa.pub
+  
+  Windows
+	clip < ~/.ssh/id_rsa.pub
 
+  Linux
+    cat ~/.ssh/id_rsa.pub
+-------------------------------------------------
+ git log --all --graph --decorate --oneline
+ 
+ git config --global alias.superlog "log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 
+ git config --global --unset alias.<tuAlias>
+-------------------------------------------------
+Uso de alias en linux
+  alis arbolito="git log --all --graph --decorate --oneline"
+-------------------------------------------------
+Tag y Versiones 
+  
